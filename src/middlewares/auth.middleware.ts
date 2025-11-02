@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv"
 import { AppDataSource } from "../datasource";
 import { compare } from "bcrypt";
-import User from "../Modelos/user.model";
+import User from "../Modelos/funcionario.model";
 dotenv.config();
 
 async function basicAuthMiddleware(req: Request, res: Response, next: NextFunction) {

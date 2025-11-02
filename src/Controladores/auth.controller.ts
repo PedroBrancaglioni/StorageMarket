@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken"
-import userRepository from "../Repositorios/user.repository";
+import userRepository from "../Repositorios/funcionario.repository";
 import dotenv from "dotenv"
-import User from "../Modelos/user.model";
+import User from "../Modelos/funcionario.model";
 import { compare } from "bcrypt";
 import { AppDataSource } from "../datasource";
 dotenv.config();
