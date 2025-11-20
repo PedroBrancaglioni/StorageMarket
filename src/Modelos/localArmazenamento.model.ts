@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity, PrimaryColumn} from "typeorm";
+import { BeforeInsert, Column, Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn} from "typeorm";
 
 @Entity()
 class localArmazenamento {
@@ -11,7 +11,7 @@ class localArmazenamento {
     @Column()
     capacidade: number;
 
-    @Column()
+    @UpdateDateColumn()
     dtReposicao: Date;
 
     @Column()

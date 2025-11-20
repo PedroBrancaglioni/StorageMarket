@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn , CreateDateColumn, UpdateDateColumn, DeleteDateColumn} from 'typeorm'
 
 @Entity()
 class produto {
@@ -17,13 +17,13 @@ class produto {
     @Column()
     tipo: string;
 
-    @Column()
+    @CreateDateColumn()
     dtInsercao: Date;
 
-    @Column()
+    @UpdateDateColumn()
     dtAtualizado: Date;
 
-    @Column()
+    @DeleteDateColumn()
     dtRemocao: Date;
 
     constructor(preco: number, nome: string, qtdEstoque: number, tipo: string, dtInsercao: Date, dtAtualizado: Date, dtRemocao: Date) {

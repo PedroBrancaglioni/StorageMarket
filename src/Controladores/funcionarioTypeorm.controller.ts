@@ -24,7 +24,7 @@ async function createFuncionario(req: Request, res: Response) {
         return res.status(201).json(saved);
     } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Erro ao criar."});
+    return res.status(500).json({ error: "Erro ao criat o funcionário."});
     }
 }
 

@@ -8,6 +8,10 @@ export async function createProduto(req: Request, res: Response) {
     try {
         const data = req.body;
 
+        if (Object.keys(data).length === 0) {
+            return res.status(400).json({ error: "Corpo da requisição não pode estar vazio." });
+        }
+
         const produto = repository.create(data);
         const saved = await repository.save(produto);
 
@@ -15,7 +19,7 @@ export async function createProduto(req: Request, res: Response) {
 
     } catch (error) {
         console.error("Erro ao criar produto:", error);
-        return res.status(500).json({ error: "Erro ao criar produto." });
+        return res.status(500).json({ error: error });
     }
 }
 

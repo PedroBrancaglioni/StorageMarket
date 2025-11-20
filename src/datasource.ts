@@ -11,6 +11,6 @@ export const AppDataSource = new DataSource({
     password: 'HJ334ab5&', 
     database: 'StorageMarket',
     synchronize: false,
-    entities: ['src/modelos/*.ts'],
+    entities: ['src/Modelos/*.ts'],
     migrations: ['src/migrations/*.ts'],
 });
