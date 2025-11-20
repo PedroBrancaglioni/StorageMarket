@@ -19,7 +19,7 @@ export async function createProduto(req: Request, res: Response) {
 
     } catch (error) {
         console.error("Erro ao criar produto:", error);
-        return res.status(500).json({ error: error });
+        return res.status(500).json({ error: "Erro ao criar produto." });
     }
 }
 
