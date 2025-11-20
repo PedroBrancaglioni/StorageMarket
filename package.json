@@ -1,25 +1,22 @@
 {
-  "name": "course-pw-fatec-20252-project",
+  "name": "storagemarket-controllers-routes",
   "version": "1.0.0",
-  "description": "Projeto da Disciplina de 'Programação Web' do curso de ADS da Fatec de Ribeirão Preto - SP",
+  "description": "Projeto de Programação Web da Fatec de Ribeirão Preto",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edcaraujo/course-pw-fatec-20252-project.git"
+    "url": "git+https://github.com/PedroBrancaglioni/StorageMarket.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/edcaraujo/course-pw-fatec-20252-project/issues"
-  },
-  "homepage": "https://github.com/edcaraujo/course-pw-fatec-20252-project#readme",
+  "homepage": "https://github.com/PedroBrancaglioni/StorageMarket",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
@@ -36,6 +33,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.2"
   }
 }

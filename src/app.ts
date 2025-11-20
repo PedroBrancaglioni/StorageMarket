@@ -3,11 +3,11 @@ import funcionarioRouter from "./Rotas/funcionario.route";
 import localArmazenamentoRouter from "./Rotas/localArmazenamento.route";
 import produtoRouter from "./Rotas/produto.route";
 import authRouter from "./Rotas/auth.route";
-import logger from "./middlewares/logger.middleware";
+import logger from "./middlewares/registro.middleware";
 
 const app = express();
 app.use(express.json());
-app.use(logger.consoleLoggerMiddleware);
+app.use(logger.logDeRegistro);
 
 app.use("/v1/funcionarios",funcionarioRouter);
 app.use("/v1/locais", localArmazenamentoRouter);

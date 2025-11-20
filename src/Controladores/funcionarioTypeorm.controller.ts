@@ -4,22 +4,32 @@ import funcionario  from "../Modelos/funcionario.model";
 
 const repository = AppDataSource.getRepository(funcionario);
 
-export async function createFuncionario(req: Request, res: Response) {
+async function createFuncionario(req: Request, res: Response) {
     try {
-        const data = req.body;
+        const { cpf, nome, cargo, dtNascimento } = req.body;
 
-        const func = repository.create(data);
+        if (!cpf || !nome || !cargo || !dtNascimento) {
+            return res.status(400).json({ error: "CPF, nome, cargo e data de nascimento são obrigatórios." });
+        }
+
+        const existingFunc = await repository.findOneBy({ cpf: cpf });
+        if (existingFunc) {
+            return res.status(409).json({ error: "Já existe um funcionário com este CPF." });
+        }
+
+        const func = repository.create({ cpf: cpf, nome, cargo, dtNascimento: new Date(dtNascimento) });
         const saved = await repository.save(func);
+
 
         return res.status(201).json(saved);
     } catch (error) {
-        console.error("Erro:", error);
-        return res.status(500).json({ error: "Erro ao criar funcionário." });
+    console.error(error);
+    return res.status(500).json({ error: "Erro ao criar."});
     }
 }
 
 
-export async function getFuncionarios(req: Request, res: Response) {
+async function getFuncionarios(req: Request, res: Response) {
     try {
         const funcionarios = await repository.find();
         return res.status(200).json(funcionarios);
@@ -29,9 +39,9 @@ export async function getFuncionarios(req: Request, res: Response) {
 }
 
 
-export async function getFuncionarioByCPF(req: Request, res: Response) {
+async function getFuncionarioByCPF(req: Request, res: Response) {
     try {
-        const cpf = Number(req.params.cpf);
+        const cpf = req.params.cpf;
 
         if (!cpf) {
             return res.status(400).json({ error: "CPF inválido." });
@@ -49,10 +59,14 @@ export async function getFuncionarioByCPF(req: Request, res: Response) {
     }
 }
 
-export async function updateFuncionario(req: Request, res: Response) {
+async function updateFuncionario(req: Request, res: Response) {
     try {
-        const cpf = Number(req.params.cpf);
+        const cpf = req.params.cpf;
         const data = req.body;
+
+        if (!cpf) {
+            return res.status(400).json({ error: "CPF inválido." });
+        }
 
         const funcionario = await repository.findOneBy({ cpf });
 
@@ -75,9 +89,13 @@ export async function updateFuncionario(req: Request, res: Response) {
 }
 
 
-export async function deleteFuncionario(req: Request, res: Response) {
+async function deleteFuncionario(req: Request, res: Response) {
     try {
-        const cpf = Number(req.params.cpf);
+        const cpf = req.params.cpf;
+
+        if (!cpf) {
+            return res.status(400).json({ error: "CPF inválido." });
+        }
 
         const funcionario = await repository.findOneBy({ cpf });
 

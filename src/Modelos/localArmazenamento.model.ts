@@ -1,8 +1,8 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import { BeforeInsert, Column, Entity, PrimaryColumn} from "typeorm";
 
 @Entity()
 class localArmazenamento {
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn({ type: "bigint" })
     corredor: number;
 
     @Column()

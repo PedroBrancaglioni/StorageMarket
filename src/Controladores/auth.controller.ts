@@ -12,24 +12,20 @@ export async function login(req: Request, res: Response) {
     try {
         const { cpf, nome } = req.body;
 
-        // Validar entrada
         if (!cpf || !nome) {
             return res.status(400).json({ error: "CPF e nome são obrigatórios." });
         }
 
-        // Buscar funcionário pelo CPF
-        const func = await repository.findOneBy({ cpf: Number(cpf) });
+        const func = await repository.findOneBy({ cpf });
 
         if (!func) {
             return res.status(401).json({ error: "Funcionário não encontrado." });
         }
 
-        // Validar nome
         if (func.nome !== nome) {
             return res.status(401).json({ error: "Nome inválido." });
         }
 
-        // Criar token JWT
         const token = jwt.sign(
             {
                 cpf: func.cpf,

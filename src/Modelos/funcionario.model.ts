@@ -1,32 +1,29 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
 @Entity()
 class funcionario {
-    @PrimaryGeneratedColumn()
-    cpf: number;
+    @PrimaryColumn({ type: "varchar", length: 11 })
+    cpf: string;
 
     @Column()
     nome: string;
     
     @Column()
+    cargo: string; // Adicionando cargo, que é comum para funcionário
+
+    @Column({ type: "date" }) // Data de nascimento
     dtNascimento: Date;
 
-    @Column()
+    @CreateDateColumn() // Data de criação automática
     dtCadastro: Date;
 
-    @Column()
+    @UpdateDateColumn() // Data de atualização automática
     dtAtualizado: Date;
 
-    @Column()
+    @DeleteDateColumn() // Para soft delete (se for usar o softDelete do TypeORM)
     dtRemocao: Date;
 
-    constructor(nome: string, dtNascimento: Date, dtCadastro: Date, dtAtualizado: Date, dtRemocao: Date) {
-        this.nome = nome;
-        this.dtNascimento = dtNascimento;
-        this.dtCadastro = dtCadastro;
-        this.dtAtualizado = dtAtualizado;
-        this.dtRemocao = dtRemocao;
-    }
+    // O construtor pode ser removido ou simplificado, pois o TypeORM gerencia a criação da entidade
 }
 
 export default funcionario;

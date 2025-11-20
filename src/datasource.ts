@@ -1,14 +1,16 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
+import dotenv from 'dotenv'
+dotenv.config();
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '12345', // 'admin' no caso de vocês    
-    database: 'cascata',
+    password: 'HJ334ab5&', 
+    database: 'StorageMarket',
     synchronize: false,
-    entities: ['src/models/*.ts'],
+    entities: ['src/modelos/*.ts'],
     migrations: ['src/migrations/*.ts'],
 });
