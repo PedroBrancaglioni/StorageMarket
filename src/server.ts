@@ -5,15 +5,15 @@ dotenv.config();
 
 try {
     AppDataSource.initialize();
-    console.log('Database connection established sucessfully!');
+    console.log('Conexão com o Banco de Dados efetuada com sucesso');
 } catch(err){
-    console.error('Error connection to database:', err);
+    console.error('Erro de conexão com o DB', err);
     process.exit(1);
 }
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    console.log(`API is ready to use!`);
+    console.log(`Servidor está rodando na porta ${PORT}`);
+    console.log(`API está pronta para uso`);
 });

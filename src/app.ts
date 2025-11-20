@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express"
-import router from "./Rotas/patient.route";
-import userRouter from "./Rotas/user.route";
+import funcionarioRouter from "./Rotas/funcionario.route";
+import localArmazenamentoRouter from "./Rotas/localArmazenamento.route";
+import produtoRouter from "./Rotas/produto.route";
 import authRouter from "./Rotas/auth.route";
 import logger from "./middlewares/logger.middleware";
 
@@ -8,16 +9,17 @@ const app = express();
 app.use(express.json());
 app.use(logger.consoleLoggerMiddleware);
 
-app.use("/v1/patient",router);
-app.use("/v1/users", userRouter);
+app.use("/v1/funcionarios",funcionarioRouter);
+app.use("/v1/locais", localArmazenamentoRouter);
+app.use("/v1/produtos", produtoRouter);
 app.use("/v1/auth", authRouter);
 
 app.get("/",(req: Request, res: Response) => {
-    res.send("This is the root route!");
+    res.send("Rota padrão");
 });
 
 app.use((req: Request, res: Response) => {
-    res.send("API is running...nothing here!");
+    res.send("API ta funcionando parceiro");
 });
 
 export default app;

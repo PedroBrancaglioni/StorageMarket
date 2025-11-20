@@ -1,46 +1,54 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken"
-import userRepository from "../Repositorios/funcionario.repository";
-import dotenv from "dotenv"
-import User from "../Modelos/funcionario.model";
-import { compare } from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 import { AppDataSource } from "../datasource";
+import funcionario from "../Modelos/funcionario.model";
+
 dotenv.config();
 
-async function login(req: Request, res: Response) {
-    const { username, password } = req.body;
+const repository = AppDataSource.getRepository(funcionario);
 
-    if (!username || !password) {
-        res.status(401).json({error: "Usuário e/ou senha não informados."})
-        return;
+export async function login(req: Request, res: Response) {
+    try {
+        const { cpf, nome } = req.body;
+
+        // Validar entrada
+        if (!cpf || !nome) {
+            return res.status(400).json({ error: "CPF e nome são obrigatórios." });
+        }
+
+        // Buscar funcionário pelo CPF
+        const func = await repository.findOneBy({ cpf: Number(cpf) });
+
+        if (!func) {
+            return res.status(401).json({ error: "Funcionário não encontrado." });
+        }
+
+        // Validar nome
+        if (func.nome !== nome) {
+            return res.status(401).json({ error: "Nome inválido." });
+        }
+
+        // Criar token JWT
+        const token = jwt.sign(
+            {
+                cpf: func.cpf,
+                nome: func.nome
+            },
+            String(process.env.JWT_SECRET),
+            { expiresIn: "1h" }
+        );
+
+        return res.status(200).json({
+            message: "Login realizado com sucesso!",
+            token,
+            funcionario: func
+        });
+
+    } catch (error) {
+        console.error("Erro no login:", error);
+        return res.status(500).json({ error: "Erro interno no login." });
     }
-
-    const repository = AppDataSource.getRepository(User);
-    const user = await repository.findOneBy({"username": username});
-
-    if (user == null) {
-        res.status(401).json({error: "Usuário inválido!"});
-        return;
-    }
-
-    const isValid = await compare(password, user.password);
-
-    if (!isValid) {
-        res.status(401).json({error: "Credencial inválida!"});
-        return;
-    }
-
-    const token = jwt.sign(
-        { "username": username },
-        String(process.env.JWT_SECRET),
-        { expiresIn: "1h"}
-    );
-
-    res.status(200).json(
-        {message: "Login realizado com sucesso!", 
-            token: token});
 }
 
-export default {
-    login
-}
+export default { login };
