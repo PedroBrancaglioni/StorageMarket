@@ -2,7 +2,6 @@ import { describe, it, expect, afterEach, jest } from '@jest/globals';
 import { Response, Request } from "express";
 import produto from "../../Modelos/produto.model";
 
-// Mock do repositório
 const mockRepository = {
     create: jest.fn(),
     save: jest.fn(),
@@ -10,14 +9,12 @@ const mockRepository = {
     findOneBy: jest.fn()
 }
 
-// Mock do datasource
 jest.mock('../../datasource', () => ({
     AppDataSource: {
         getRepository: jest.fn(() => mockRepository)
     }
 }));
 
-// Importa o controller DEPOIS do mock
 import {
     createProduto,
     getProdutos,
@@ -26,7 +23,6 @@ import {
     deleteProduto
 } from "../../Controladores/produtoTypeorm.controller";
 
-// Helper para mockar Request e Response
 const mockRequestResponse = (reqOverrides: Partial<Request> = {}) => {
     const req: Partial<Request> = {
         params: {},

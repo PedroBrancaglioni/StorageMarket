@@ -2,7 +2,6 @@ import { describe, it, expect, afterEach, jest } from '@jest/globals';
 import { Response, Request } from "express";
 import funcionario from "../../Modelos/funcionario.model";
 
-// Mock do repositório
 const mockRepository = {
     create: jest.fn(),
     save: jest.fn(),
@@ -10,17 +9,14 @@ const mockRepository = {
     findOneBy: jest.fn()
 }
 
-// Mock do datasource
 jest.mock('../../datasource', () => ({
     AppDataSource: {
         getRepository: jest.fn(() => mockRepository)
     }
 }));
 
-// Importa o controller DEPOIS do mock
 import funcionarioController from "../../Controladores/funcionarioTypeorm.controller";
 
-// Helper para mockar Request e Response
 const mockRequestResponse = (reqOverrides: Partial<Request> = {}) => {
     const req: Partial<Request> = {
         params: {},

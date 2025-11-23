@@ -13,7 +13,6 @@ describe('Funcionario model', () => {
         expect(func.cargo).toBe('Analista');
         expect(func.dtNascimento).toEqual(new Date('1990-01-01'));
 
-        // As datas automáticas devem ser undefined até serem definidas pelo TypeORM
         expect(func.dtCadastro).toBeUndefined();
         expect(func.dtAtualizado).toBeUndefined();
         expect(func.dtRemocao).toBeUndefined();

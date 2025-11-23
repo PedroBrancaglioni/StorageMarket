@@ -9,21 +9,21 @@ class funcionario {
     nome: string;
     
     @Column()
-    cargo: string; // Adicionando cargo, que é comum para funcionário
+    cargo: string;
 
-    @Column({ type: "date" }) // Data de nascimento
+    @Column({ type: "date" })
     dtNascimento: Date;
 
-    @CreateDateColumn() // Data de criação automática
+    @CreateDateColumn()
     dtCadastro: Date;
 
-    @UpdateDateColumn() // Data de atualização automática
+    @UpdateDateColumn()
     dtAtualizado: Date;
 
-    @DeleteDateColumn() // Para soft delete (se for usar o softDelete do TypeORM)
+    @DeleteDateColumn()
     dtRemocao: Date;
 
-    // O construtor pode ser removido ou simplificado, pois o TypeORM gerencia a criação da entidade
+
 }
 
 export default funcionario;

@@ -2,7 +2,6 @@ import { describe, it, expect, afterEach, jest } from '@jest/globals';
 import { Response, Request } from "express";
 import localArmazenamento from "../../Modelos/localArmazenamento.model";
 
-// Mock do repositório
 const mockRepository = {
     create: jest.fn(),
     save: jest.fn(),
@@ -10,14 +9,12 @@ const mockRepository = {
     findOneBy: jest.fn()
 }
 
-// Mock do datasource
 jest.mock('../../datasource', () => ({
     AppDataSource: {
         getRepository: jest.fn(() => mockRepository)
     }
 }));
 
-// Importa o controller DEPOIS do mock
 import {
     createLocalArmazenamento,
     getLocais,
@@ -26,7 +23,6 @@ import {
     deleteLocal
 } from "../../Controladores/localArmazenamentoTypeorm.controller";
 
-// Helper para mockar Request e Response
 const mockRequestResponse = (reqOverrides: Partial<Request> = {}) => {
     const req: Partial<Request> = {
         params: {},
