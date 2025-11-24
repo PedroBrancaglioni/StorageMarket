@@ -36,7 +36,7 @@
 
 /**
  * @swagger
- * /local-armazenamento/{corredor}:
+ * /locais/{corredor}:
  *   get:
  *     summary: Busca local de armazenamento por corredor
  *     tags: [Local de Armazenamento]
@@ -75,7 +75,7 @@
 
 /**
  * @swagger
- * /local-armazenamento:
+ * /locais:
  *   get:
  *     summary: Lista todos os locais de armazenamento
  *     tags: [Local de Armazenamento]
@@ -138,7 +138,7 @@
 
 /**
  * @swagger
- * /local-armazenamento/{corredor}:
+ * /locais/{corredor}:
  *   put:
  *     summary: Atualiza um local de armazenamento existente
  *     tags: [Local de Armazenamento]
