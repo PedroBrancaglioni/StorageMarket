@@ -1,2 +1,2 @@
-# course-pw-fatec-20252-project
-Projeto da Disciplina de 'Programação Web' do curso de ADS da Fatec de Ribeirão Preto - SP
+# StorageMarket
+Projeto de Programação Web realizado por: Pedro Henrique Brancaglioni, Murilo Oliveira Terçariol, Arthur Carvalho de Oliveira e Juan Soares dos Reis

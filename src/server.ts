@@ -3,15 +3,14 @@ import { AppDataSource } from "./datasource";
 import dotenv from "dotenv";
 dotenv.config();
 
-//comentar banco de dados
-/*try {
+try {
     AppDataSource.initialize();
     console.log('Conexão com o Banco de Dados efetuada com sucesso');
 } catch(err){
     console.error('Erro de conexão com o DB', err);
     process.exit(1);
 }
-*/
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

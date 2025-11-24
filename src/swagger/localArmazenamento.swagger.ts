@@ -14,36 +14,24 @@
  *       required:
  *         - corredor
  *         - capacidade
+ *         - fechado
  *       properties:
  *         corredor:
- *           type: string
- *           description: Identificador do corredor
- *           example: "A1"
- *         prateleira:
- *           type: string
- *           description: Número da prateleira
- *           example: "P01"
- *         capacidade:
  *           type: integer
- *           description: Capacidade máxima do local
- *           example: 100
- *         ocupado:
- *           type: integer
- *           description: Quantidade ocupada
- *           example: 75
- *         disponivel:
- *           type: boolean
- *           description: Se o local está disponível
- *           example: true
+ *           description: Número do corredor
+ *           example: 2
  *         descricao:
  *           type: string
  *           description: Descrição do local
- *           example: "Local para produtos eletrônicos"
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *           example: "Corredor de eletrônicos"
+ *         capacidade:
+ *           type: integer
+ *           description: Capacidade máxima do local
+ *           example: 300
+ *         fechado:
+ *           type: boolean
+ *           description: Indica se o local está fechado
+ *           example: false
  */
 
 /**
@@ -70,7 +58,15 @@
  *             schema:
  *               $ref: '#/components/schemas/LocalArmazenamento'
  *       401:
- *         description: Token não fornecido ou inválido
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       404:
  *         description: Local não encontrado
  *       500:
@@ -95,7 +91,15 @@
  *               items:
  *                 $ref: '#/components/schemas/LocalArmazenamento'
  *       401:
- *         description: Token não fornecido ou inválido
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       500:
  *         description: Erro interno do servidor
  *   post:
@@ -119,7 +123,15 @@
  *       400:
  *         description: Dados inválidos
  *       401:
- *         description: Token não fornecido ou inválido
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       500:
  *         description: Erro interno do servidor
  */
@@ -150,7 +162,15 @@
  *       200:
  *         description: Local atualizado com sucesso
  *       401:
- *         description: Token não fornecido ou inválido
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       404:
  *         description: Local não encontrado
  *       500:
@@ -172,7 +192,15 @@
  *       200:
  *         description: Local removido com sucesso
  *       401:
- *         description: Token não fornecido ou inválido
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       404:
  *         description: Local não encontrado
  *       500:

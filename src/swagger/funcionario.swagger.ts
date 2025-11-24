@@ -14,29 +14,25 @@
  *       required:
  *         - cpf
  *         - nome
- *         - email
+ *         - cargo
+ *         - dtNascimento
  *       properties:
  *         cpf:
- *           type: string
+ *           type: integer
  *           description: CPF do funcionário
- *           example: "12345678901"
+ *           example: 89999999999
  *         nome:
  *           type: string
  *           description: Nome completo do funcionário
- *           example: "João Silva"
- *         email:
- *           type: string
- *           format: email
- *           description: Email do funcionário
- *           example: "joao@email.com"
- *         telefone:
- *           type: string
- *           description: Telefone do funcionário
- *           example: "(11) 99999-9999"
+ *           example: "João da Silva"
  *         cargo:
  *           type: string
  *           description: Cargo do funcionário
- *           example: "Vendedor"
+ *           example: "Repositor"
+ *         dtNascimento:
+ *           type: integer
+ *           description: Data de nascimento no formato YYYYMMDD
+ *           example: 20051202
  */
 
 /**
@@ -44,6 +40,8 @@
  * /funcionarios/{cpf}:
  *   get:
  *     summary: Busca funcionário por CPF
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Funcionários]
  *     parameters:
  *       - in: path
@@ -60,6 +58,16 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Funcionario'
+ *       401:
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       404:
  *         description: Funcionário não encontrado
  *       500:
@@ -71,6 +79,8 @@
  * /funcionarios:
  *   get:
  *     summary: Lista todos os funcionários
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Funcionários]
  *     responses:
  *       200:
@@ -81,10 +91,22 @@
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Funcionario'
+ *       401:
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       500:
  *         description: Erro interno do servidor
  *   post:
  *     summary: Cria um novo funcionário
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Funcionários]
  *     requestBody:
  *       required: true
@@ -101,6 +123,16 @@
  *               $ref: '#/components/schemas/Funcionario'
  *       400:
  *         description: Dados inválidos
+ *       401:
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       500:
  *         description: Erro interno do servidor
  */
@@ -110,6 +142,8 @@
  * /funcionarios/{cpf}:
  *   put:
  *     summary: Atualiza um funcionário existente
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Funcionários]
  *     parameters:
  *       - in: path
@@ -128,12 +162,24 @@
  *     responses:
  *       200:
  *         description: Funcionário atualizado com sucesso
+ *       401:
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       404:
  *         description: Funcionário não encontrado
  *       500:
  *         description: Erro interno do servidor
  *   delete:
  *     summary: Remove um funcionário
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Funcionários]
  *     parameters:
  *       - in: path
@@ -146,6 +192,16 @@
  *     responses:
  *       200:
  *         description: Funcionário removido com sucesso
+ *       401:
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       404:
  *         description: Funcionário não encontrado
  *       500:

@@ -15,7 +15,7 @@ const options = {
       },
     ],
   },
-  apis: ['./src/swagger/*.swagger.ts'], // Aponta para os arquivos de documentação
+  apis: ['./src/swagger/*.swagger.ts'],
 };
 
 export const swaggerSpec = swaggerJSDoc(options);

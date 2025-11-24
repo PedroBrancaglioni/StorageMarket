@@ -12,35 +12,27 @@
  *     Produto:
  *       type: object
  *       required:
- *         - id
  *         - nome
  *         - preco
+ *         - qtdEstoque
+ *         - tipo
  *       properties:
- *         id:
- *           type: integer
- *           description: ID único do produto
- *           example: 1
  *         nome:
  *           type: string
  *           description: Nome do produto
  *           example: "Notebook Dell"
- *         descricao:
- *           type: string
- *           description: Descrição do produto
- *           example: "Notebook Dell Inspiron 15"
  *         preco:
  *           type: number
- *           format: float
  *           description: Preço do produto
- *           example: 2500.99
- *         categoria:
- *           type: string
- *           description: Categoria do produto
- *           example: "Eletrônicos"
- *         estoque:
+ *           example: 2500
+ *         qtdEstoque:
  *           type: integer
- *           description: Quantidade em estoque
+ *           description: Quantidade disponível em estoque
  *           example: 10
+ *         tipo:
+ *           type: string
+ *           description: Tipo do produto
+ *           example: "Eletrônico"
  */
 
 /**
@@ -48,6 +40,8 @@
  * /produtos/{id}:
  *   get:
  *     summary: Busca produto por ID
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Produtos]
  *     parameters:
  *       - in: path
@@ -64,6 +58,16 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Produto'
+ *       401:
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       404:
  *         description: Produto não encontrado
  *       500:
@@ -75,6 +79,8 @@
  * /produtos:
  *   get:
  *     summary: Lista todos os produtos
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Produtos]
  *     responses:
  *       200:
@@ -85,10 +91,23 @@
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Produto'
+ *       401:
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       500:
  *         description: Erro interno do servidor
+ *
  *   post:
  *     summary: Cria um novo produto
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Produtos]
  *     requestBody:
  *       required: true
@@ -105,6 +124,16 @@
  *               $ref: '#/components/schemas/Produto'
  *       400:
  *         description: Dados inválidos
+ *       401:
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       500:
  *         description: Erro interno do servidor
  */
@@ -114,6 +143,8 @@
  * /produtos/{id}:
  *   put:
  *     summary: Atualiza um produto existente
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Produtos]
  *     parameters:
  *       - in: path
@@ -132,12 +163,25 @@
  *     responses:
  *       200:
  *         description: Produto atualizado com sucesso
+ *       401:
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       404:
  *         description: Produto não encontrado
  *       500:
  *         description: Erro interno do servidor
+ *
  *   delete:
  *     summary: Remove um produto
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Produtos]
  *     parameters:
  *       - in: path
@@ -150,6 +194,16 @@
  *     responses:
  *       200:
  *         description: Produto removido com sucesso
+ *       401:
+ *         description: Token inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Token inválido ou expirado"
  *       404:
  *         description: Produto não encontrado
  *       500:
