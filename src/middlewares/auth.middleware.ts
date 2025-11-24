@@ -1,88 +1,38 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-
-import dotenv from "dotenv"
-import { AppDataSource } from "../datasource";
-import { compare } from "bcrypt";
-import User from "../Modelos/user.model";
+import dotenv from "dotenv";
 dotenv.config();
 
-async function basicAuthMiddleware(req: Request, res: Response, next: NextFunction) {
-   const authHeader = req.headers.authorization;
 
-   if (!authHeader) {
-    res.status(401).json({error: "Autenticação necessária."});
-    return;
-   }
-
-   const [authType, authValue] = authHeader.split(' ');
-
-   if (authType !== "Basic" || !authValue ) {
-    res.status(401).json({error: "Autenticação necessária."});
-    return;
-   }
-
-   const authCredential = Buffer.from(authValue, 'base64').toString('utf-8');
-   
-   const [authUser,authPass] = authCredential.split(':');
-
-   const repository = AppDataSource.getRepository(User);
-   const user = await repository.findOneBy({"username": String(authUser)});
-
-   if (user == null) {
-    res.status(401).json({error: "Usuário/senha inválida."});
-    return;
-   } 
-
-   const isValid = compare(String(authPass),user.password);
-
-   if (!isValid) {
-    res.status(401).json({error: "Usuário/senha inválida."});
-    return;
-   } 
-
-   next();
+declare global {
+    namespace Express {
+        interface Request {
+            user?: { cpf: number; nome: string };
+        }
+    }
 }
 
-function apiKeyAuthMiddleware(req: Request, res: Response, next: NextFunction) {
-    
-    // TODO
+export function verificarToken(req: Request, res: Response, next: NextFunction) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
-    next();
-}
-
-function jwtAuthMiddleware(req: Request, res: Response, next: NextFunction) {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-        res.status(401).json({error: "Autenticação necessária."});
-        return;
+    if (!token) {
+        return res.status(403).json({ error: "Acesso negado. Nenhum token fornecido." });
     }
 
-    const [authType, authValue] = authHeader.split(' ');
-
-    if (authType !== "Bearer" || !authValue) {
-        res.status(401).json({error: "Autenticação necessária."});
-        return;
-    }
-
-    try {
-        jwt.verify(authValue, String(process.env.JWT_SECRET));
-    } catch (error) {
-        if (error instanceof jwt.TokenExpiredError) {
-            res.status(401).json({error: "Token expirado."});
-        }else{
-            res.status(401).json({error: "Token inválido."});
+    try {;
+        const secret = process.env.JWT_SECRET;
+        if (!secret) {
+            throw new Error("A chave secreta JWT não foi definida no .env");
         }
 
-        return;
+        const decoded = jwt.verify(token, secret);
+        req.user = decoded as { cpf: number; nome: string };
+
+        next();
+
+    } catch (error) {
+        console.error("Erro na verificação do token:", error);
+        return res.status(401).json({ error: "Token inválido ou expirado." });
     }
-
-    next();
-}
-
-export default {
-    jwtAuthMiddleware,
-    basicAuthMiddleware,
-    apiKeyAuthMiddleware
 }
